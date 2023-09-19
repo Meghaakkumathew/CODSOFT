@@ -1,0 +1,55 @@
+import tkinter as game
+import random
+choices = ["rock", "paper", "scissors"]
+
+
+def games(userchoice):
+    text_box.delete(1.0,game.END)
+    computerchoice= ''.join(random.choice(choices) )
+    text_box.insert("1.0", computerchoice)
+    
+    
+    if userchoice == computerchoice:
+        result.config(text="It's a tie!")
+    elif (userchoice == "rock" and computerchoice == "scissors") or (userchoice == "paper" and computerchoice == "rock") or (userchoice == "scissors" and computerchoice == "paper"):
+        result.config(text="You win!")
+    else:
+        result.config(text="You lost :( ")
+
+
+def get_userchoice(choice):
+    games(choice)
+    
+    
+    
+    
+root=game.Tk()
+root.title("Rock Paper Scissor")
+root.geometry("500x500")
+
+label1=game.Label(root,text="Rock Paper Scissor" ,height=2,width=25,font=("Arial",14),bg="white",fg="black")
+label1.grid(row=1,column=5)
+
+rock=game.Button(root,text="Rock",command=lambda:get_userchoice("rock"),height=2,width=20,font=("Arial",14),bg="red",fg="white")
+rock.grid(row=3,column=5)
+
+paper=game.Button(root,text="Paper",command=lambda:get_userchoice("paper"),height=2,width=20,font=("Arial",14),bg="blue",fg="white")
+paper.grid(row=5,column=5)
+
+scissor=game.Button(root,text="Scissor",command=lambda:get_userchoice("scissors"),height=2,width=20,font=("Arial",14),bg="green",fg="white")
+scissor.grid(row=7,column=5)
+
+comp=game.Label(root,text="oponents choice:",height=2,width=22,font=("ariel",14))
+comp.grid(row=3,column=6)
+
+
+text_box=game.Text(root,height=2,width=16,font=("ariel",14))
+text_box.grid(row=5,column=6)
+
+
+result=game.Label(root,height=2,width=22,font=("ariel",14))
+result.grid(row=8,column=6)
+
+
+
+root.mainloop()
