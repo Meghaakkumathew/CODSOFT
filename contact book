@@ -1,0 +1,128 @@
+import tkinter as con
+import tkinter as store
+import tkinter as view
+
+contacts= {}
+
+
+def add_contact():
+    global contacts
+    
+    
+    def new_contact():
+        name=nam.get("1.0", store.END)
+        phonenum=phone.get("1.0", store.END)
+        
+        contacts[name]=phonenum
+        nam.delete(0, store.END)
+        phone.delete(0, store.END)
+        
+        
+    def deletecontacts():
+        name = nam.get("1.0", store.END)
+        
+        if name in contacts:
+            del contacts[name]
+           
+            remove_box.delete(1.0,store.END)
+            remove_box.insert("1.0", "contact removed")
+        else:
+            remove_box.delete(1.0,store.END)
+            remove_box.insert("1.0", "contact not found")
+
+    root=store.Tk()
+    root.title("Edit contact")
+    
+    name1 = store.Label(root, text="Name:")
+    name1.pack()
+    nam=store.Text(root,height=2,width=16,font=("ariel",14))
+    nam.pack()
+    
+    number = store.Label(root, text="Number:")
+    number.pack()
+    phone=store.Text(root,height=2,width=16,font=("ariel",14))
+    phone.pack()
+    
+    save=store.Button(root,text="save",command=new_contact,width=10,font=("Arial",14),bg="green",fg="white")
+    save.pack()
+    
+    remove_box=view.Text(root,height=2,width=16,font=("ariel",24))
+    remove_box.pack()
+    deletebtn=view.Button(root,text="delete contact",command=deletecontacts,width=30,font=("Arial",14),bg="red",fg="white")
+    deletebtn.pack()
+    
+    
+    
+    root.mainloop()
+    
+
+def viewdetails():
+    global contacts
+
+    def viewcontacts():
+        view_box.delete(1.0,con.END)
+        viewresult_box.delete(1.0,con.END)
+        view_box.insert("1.0", "saved details:\n")
+    
+        for name, phonenum in contacts.items():
+            view_box.insert(con.END, f"Name: {name} \t Number: {phonenum}\n")
+    
+        
+    def search_contact():
+        global contacts
+        name=viewresult_box.get(1.0,store.END)
+        view_box.delete(1.0,con.END)
+        viewresult_box.delete(1.0,con.END)
+        if name in contacts:
+            view_box.delete(1.0,store.END)
+            
+            view_box.insert(con.END, contacts[name])
+           
+        else:
+            view_box.delete(1.0,store.END)
+            view_box.insert("1.0", "contact not found")
+    
+        
+
+    root=view.Tk()
+    root.title("saved contacts")
+
+    viewresult_box=view.Text(root,height=2,width=22,font=("ariel",14))
+    viewresult_box.pack()
+    
+    search1=view.Button(root,text="search contact",command=search_contact,width=20,font=("Arial",14),bg="red",fg="white")
+    search1.pack()
+    
+    view_box=view.Text(root,height=5,width=36,font=("ariel",14))
+    view_box.pack()
+    done=view.Button(root,text="fetch the saved contacts",command=viewcontacts,width=30,font=("Arial",14),bg="blue",fg="white")
+    done.pack()
+    
+   
+
+    root.mainloop()
+    
+    
+
+
+root=con.Tk()
+root.title("ContactBook")
+
+
+search=con.Button(root,text="search contact",command=viewdetails,width=20,font=("Arial",14),bg="blue",fg="white")
+search.pack()
+
+
+
+add=con.Button(root,text="Add contact",command=add_contact,width=30,font=("Arial",14),bg="blue",fg="white")
+add.pack()
+
+viewd=con.Button(root,text="View contact",command=viewdetails,width=30,font=("Arial",14),bg="blue",fg="white")
+viewd.pack()
+
+delete=con.Button(root,text="delete contact",command=add_contact,width=30,font=("Arial",14),bg="blue",fg="white")
+delete.pack()
+
+
+
+root.mainloop()
